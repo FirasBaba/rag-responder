@@ -1,5 +1,4 @@
 file_dir ?= $(realpath .)
-usr = $USER
 build:
 	docker-compose build
 
@@ -25,6 +24,7 @@ run-ollama:
 
 run-chat:
 	docker-compose run \
+	-e OLLAMA_MODEL_NAME="${OLLAMA_MODEL_NAME}" \
 	rag-responder \
 	python3 main.py
 
