@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  rag-responder:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: rag-responder
+    volumes:
+      - ${PWD}/data:/data 
+      - ${PWD}/src:/src 
+      - /home/${USER}/.cache/torch/sentence_transformers/:/root/.cache/torch/sentence_transformers/
+    depends_on:
+      - ollama-service
+  ollama-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.ollama
+    image: ollama/responder
+    volumes:
+      - /home/${USER}/.ollama/models:/root/.ollama/models
+    ports:
+      - "11434:11434"
